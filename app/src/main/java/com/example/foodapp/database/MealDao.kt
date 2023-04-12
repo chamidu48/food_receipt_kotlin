@@ -10,17 +10,17 @@ import java.sql.RowId
 interface MealDao {
 
     @Insert
-    suspend fun addMeal(meal: Meal)
+    fun addMeal(meal: Meal)
 
     @Insert
-    suspend fun addAll(vararg meal: Meal)
+    fun addAll(vararg meal: Meal)
 
     @Query("SELECT * FROM Meal")
-    suspend fun getAll():List<Meal>
+    fun getAll():LiveData<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%' OR Ingredients LIKE '%' || :searchInput || '%'")
-    suspend fun getMealByIngredient(searchInput:String):List<Meal>
+    fun getMealByIngredient(searchInput:String):LiveData<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%'")
-    suspend fun getMealByName(searchInput:String):List<Meal>
+    fun getMealByName(searchInput:String):LiveData<List<Meal>>
 }

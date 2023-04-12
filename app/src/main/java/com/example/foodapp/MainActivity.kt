@@ -10,22 +10,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button1:Button=findViewById(R.id.btnsearch)
-        button1.setOnClickListener {
+        val btnsearchdb:Button=findViewById(R.id.btnsearchdb)
+        btnsearchdb.setOnClickListener {
             val intent1 = Intent(this, Search::class.java)
             startActivity(intent1)
         }
 
-        val buttton2:Button=findViewById<Button>(R.id.btnsearchingredients)
-        buttton2.setOnClickListener {
+        val btnadd:Button=findViewById(R.id.btnadd)
+        btnadd.setOnClickListener {
+            addMealsMannually()
+        }
+
+        val btnsearchingredients:Button=findViewById<Button>(R.id.btnsearchingredients)
+        btnsearchingredients.setOnClickListener {
             val intent2 = Intent(this, SearchIngredients::class.java)
             startActivity(intent2)
         }
 
-        val button3:Button=findViewById<Button>(R.id.btnsearchformeals)
-        button3.setOnClickListener {
+        val btnsearchmeals:Button=findViewById<Button>(R.id.btnsearchformeals)
+        btnsearchmeals.setOnClickListener {
             val intent3 = Intent(this,SearchMeals::class.java)
             startActivity(intent3)
         }
+    }
+
+    private fun addMealsMannually() {
+
     }
 }
