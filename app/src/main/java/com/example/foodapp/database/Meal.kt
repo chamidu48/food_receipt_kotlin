@@ -11,8 +11,8 @@ data class Meal(
     val Area:String,
     val Instructions:String,
     val Tags:String,
-    val Ingredients:MutableList<String>,
-    val Measure:MutableList<String>
+    val Ingredients:String,
+    val Measure:String
 ){
     @PrimaryKey(autoGenerate = true)
     val id:Int=0

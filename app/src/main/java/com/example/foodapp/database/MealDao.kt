@@ -16,8 +16,11 @@ interface MealDao {
     suspend fun addAll(vararg meal: Meal)
 
     @Query("SELECT * FROM Meal")
-    fun getAll():LiveData<List<Meal>>
+    suspend fun getAll():List<Meal>
 
-    @Query("SELECT * FROM recipes WHERE name LIKE '%' || :searchInput || '%' OR ingredient LIKE '%' || :searchInput || '%'")
-    fun getMealByIngredient(searchInput:String):LiveData<List<Meal>>
+    @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%' OR Ingredients LIKE '%' || :searchInput || '%'")
+    suspend fun getMealByIngredient(searchInput:String):List<Meal>
+
+    @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%'")
+    suspend fun getMealByName(searchInput:String):List<Meal>
 }

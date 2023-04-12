@@ -10,7 +10,7 @@ abstract class MealDatabase : RoomDatabase() {
     abstract fun mealDao():MealDao
 
     companion object {
-        @Volatile
+        @Volatile//--available for all other threads
         private var INSTANCE: MealDatabase? = null
 
         fun getDatabase(context: Context): MealDatabase{
@@ -22,7 +22,7 @@ abstract class MealDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MealDatabase::class.java,
-                    "user_database"
+                    "MealDatabase"
                 ).build()
                 INSTANCE = instance
                 return instance
