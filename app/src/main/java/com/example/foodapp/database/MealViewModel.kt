@@ -3,7 +3,10 @@ package com.example.foodapp.database
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.roomapp.data.MealRepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MealViewModel(application: Application): AndroidViewModel(application) {
@@ -18,7 +21,13 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun addMeal(meal: Meal) {
-        repository.addMeal(meal)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addMeal(meal)
+        }
     }
+    fun getAll():LiveData<List<Meal>>{
+        return readAllData
+    }
+
 
 }
