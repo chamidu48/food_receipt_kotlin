@@ -25,6 +25,13 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
             repository.addMeal(meal)
         }
     }
+
+    fun addAll(vararg meal: Meal){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addAlll(*meal)
+        }
+    }
+
     fun getAll():LiveData<List<Meal>>{
         return readAllData
     }

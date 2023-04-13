@@ -11,5 +11,8 @@ class MealRepo(private val mealDao: MealDao) {
     fun addMeal(meal: Meal){
         mealDao.addMeal(meal)
     }
+    fun addAlll(vararg meal:Meal){
+        mealDao.addAll(*meal)
+    }
 
 }

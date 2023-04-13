@@ -4,10 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.lifecycle.ViewModel
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.foodapp.api.MealApiService
 import com.example.foodapp.database.Meal
 import com.example.foodapp.database.MealViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     //--add hardcoded meals--
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var mealApiService = MealApiService()
+
         //--init viewmodel--
         mealViewModel= ViewModelProvider(this).get(MealViewModel::class.java)
 
@@ -40,12 +45,25 @@ class MainActivity : AppCompatActivity() {
         btnsearchdb.setOnClickListener {
 //            val intent1 = Intent(this, Search::class.java)
 //            startActivity(intent1)
-            getAllData()
+            runBlocking {
+                launch {
+                    mealApiService.searchAllMealsByIngredient("chicken")
+                }
+            }
+
+
         }
 
         val btnadd:Button=findViewById(R.id.btnadd)
         btnadd.setOnClickListener {
-            addMealsMannually()
+            if(count==0){
+                addMealsMannually()
+                Toast.makeText(this, "Data added to the database", Toast.LENGTH_SHORT).show()
+                count++
+            }else{
+                Toast.makeText(this, "Data is already added", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         val btnsearchingredients:Button=findViewById<Button>(R.id.btnsearchingredients)
@@ -81,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         ingredients3= arrayOf("Rice","Onion","Lime","Garlic Clove","Cucumber","Carrots","Ground Beef","Soy Sauce")
         measures3= arrayOf("White","1","1","3","1","3 oz","1 lb","2 oz")
-        meal3=Meal(1,
+        meal3=Meal(2,
             "Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber",
             null,
             "Beef",
@@ -96,8 +114,25 @@ class MainActivity : AppCompatActivity() {
             null,
             null)
 
+        ingredients4= arrayOf("Olive Oil","Onion","Chickpeas","Vegetable Stock","Cumin","Garlic","Salt","Harissa Spice","Pepper","Lime")
+        measures4= arrayOf("2 tbs","1 medium finely diced","250g","1.5L","1 tsp","5 cloves","1/2 tsp","1 tsp","Pinch","1/2")
+        meal4=Meal(3,
+            "Leblebi Soup",
+            null,
+            "Vegetarian",
+            "Tunisian",
+            "Heat the oil in a large pot. Add the onion and cook until translucent.\r\nDrain the soaked chickpeas and add them to the pot together with the vegetable stock. Bring to the boil, then reduce the heat and cover. Simmer for 30 minutes.\r\nIn the meantime toast the cumin in a small ungreased frying pan, then grind them in a mortar. Add the garlic and salt and pound to a fine paste.\r\nAdd the paste and the harissa to the soup and simmer until the chickpeas are tender, about 30 minutes.\r\nSeason to taste with salt, pepper and lemon juice and serve hot.",
+            "https://www.themealdb.com/images/media/meals/x2fw9e1560460636.jpg",
+            "Soup",
+            "https://www.youtube.com/watch?v=BgRifcCwinY",
+            ingredients4,measures4,
+            "http://allrecipes.co.uk/recipe/43419/leblebi--tunisian-chickpea-soup-.aspx",
+            null,
+            null,
+            null)
 
-        mealViewModel.addMeal(meal1)
+
+        mealViewModel.addAll(meal1,meal2,meal3,meal4)
 
         println("Added")
     }
@@ -105,7 +140,7 @@ class MainActivity : AppCompatActivity() {
     private fun getAllData(){
         mealViewModel.getAll().observeForever { newList ->
             allMeals = newList.toTypedArray()
-            println(allMeals.size)
+            println(allMeals[0])
         }
     }
 
