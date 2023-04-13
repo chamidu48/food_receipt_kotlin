@@ -4,12 +4,12 @@ import androidx.room.TypeConverter
 
 class StringArrayConverter {
     @TypeConverter
-    fun fromString(value: String?): Array<String>? {
-        return value?.split(",")?.toTypedArray()
+    fun fromString(value: String?): ArrayList<String>? {
+        return value?.split(",")?.map { it.trim() }?.toCollection(ArrayList())
     }
 
     @TypeConverter
-    fun toString(value: Array<String>?): String? {
+    fun toString(value: ArrayList<String>?): String? {
         return value?.joinToString(",")
     }
 }

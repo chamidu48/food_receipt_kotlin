@@ -15,26 +15,24 @@ class MealApiService() {
     private val endpointSearchIngredient = "filter.php?i="
     private val endpointSearchById = "lookup.php?i="
 
-    private var id:Int=0
-    private lateinit var Meal:String
-    private lateinit var DrinkAlternate:String
+    private lateinit var id:String
+    private lateinit var Name:String
+    private var DrinkAlternate:String?= null
     private lateinit var Category:String
     private lateinit var Area:String
     private lateinit var Instructions:String
-    private lateinit var MealThumb:String
-    private lateinit var Tags:String
-    private lateinit var YouTube:String
-    private lateinit var Ingredients:Array<String?>
-    private lateinit var Measure:Array<String?>
-    private lateinit var Source:String
-    private lateinit var ImageSource:String
-    private lateinit var CreativeCommonsConfirmed:String
-    private lateinit var dateModified: String
+    private var MealThumb:String? = null
+    private var Tags:String?= null
+    private var YouTube:String?= null
+    private lateinit var Ingredients:ArrayList<String?>
+    private lateinit var Measure:ArrayList<String?>
+    private var Source:String?= null
+    private var ImageSource:String?= null
+    private var CreativeCommonsConfirmed:String?= null
+    private var dateModified: String?= null
 
     private lateinit var meal: Meal
-    private lateinit var ingredients:Array<String>
-    private lateinit var measures:Array<String>
-    private lateinit var recievedMeals:Array<Meal>
+    private lateinit var recievedMeals:ArrayList<Meal>
 
     suspend fun searchAllMealsByIngredient(searchText:String) {
         val url = URL("$baseUrl$endpointSearchIngredient$searchText")
@@ -86,11 +84,38 @@ class MealApiService() {
             mealJSONObject=getDataByID(idMeal)
             mealjsonArray = mealJSONObject.getJSONArray("meals")
             jsonObject = mealjsonArray.getJSONObject(0)
-            println(jsonObject)
+            setMealObject(jsonObject)
         }
     }
 
     private fun setMealObject(jsonObject:JSONObject){
+        id=jsonObject.getString("idMeal")
+        Name=jsonObject.getString("strMeal")
+        DrinkAlternate=jsonObject.getString("strDrinkAlternate")
+        Category=jsonObject.getString("strCategory")
+        Area=jsonObject.getString("strArea")
+        Instructions=jsonObject.getString("strInstructions")
+        MealThumb=jsonObject.getString("strMealThumb")
+        Tags=jsonObject.getString("strTags")
+        YouTube=jsonObject.getString("strYoutube")
+        Source=jsonObject.getString("strSource")
+        ImageSource=jsonObject.getString("strImageSource")
+        CreativeCommonsConfirmed=jsonObject.getString("strCreativeCommonsConfirmed")
+        dateModified=jsonObject.getString("dateModified")
 
+        Ingredients = ArrayList<String?>()
+        Measure = ArrayList<String?>()
+        recievedMeals = ArrayList<Meal>()
+
+        for (j in 1..20){
+            Ingredients.add(jsonObject.getString("strIngredient$j"))
+        }
+        for (j in 1..20){
+            Measure.add(jsonObject.getString("strMeasure$j"))
+        }
+
+        meal=Meal(Integer.parseInt(id),Name,DrinkAlternate,Category,Area,Instructions,MealThumb,Tags,YouTube,Ingredients,Measure,Source,ImageSource,CreativeCommonsConfirmed,dateModified)
+        recievedMeals.add(meal)
+        println(recievedMeals.size)
     }
 }

@@ -15,20 +15,19 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity() {
     //--add hardcoded meals--
     lateinit var meal1:Meal;
-    lateinit var ingredients1:Array<String?>
-    lateinit var measures1:Array<String?>
+    lateinit var ingredients1:ArrayList<String?>
+    lateinit var measures1:ArrayList<String?>
     lateinit var meal2:Meal;
-    lateinit var ingredients2:Array<String?>
-    lateinit var measures2:Array<String?>
+    lateinit var ingredients2:ArrayList<String?>
+    lateinit var measures2:ArrayList<String?>
     lateinit var meal3:Meal;
-    lateinit var ingredients3:Array<String?>
-    lateinit var measures3:Array<String?>
+    lateinit var ingredients3:ArrayList<String?>
+    lateinit var measures3:ArrayList<String?>
     lateinit var meal4:Meal;
-    lateinit var ingredients4:Array<String?>
-    lateinit var measures4:Array<String?>
+    lateinit var ingredients4:ArrayList<String?>
+    lateinit var measures4:ArrayList<String?>
 
     lateinit var mealViewModel:MealViewModel
-    lateinit var allMeals:Array<Meal>
 
     var count:Int=0
 
@@ -80,15 +79,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addMealsMannually() {
-        ingredients1= arrayOf("Pork","Egg","Water","Salt","Sugar","Soy Sauce","Starch","Tomato Puree","Vinegar","Coriander")
-        measures1= arrayOf("200g","1","Dash","1/2 tsp","1 tsp","10g","10g","30g","10g","Dash")
+        ingredients1= arrayListOf("Pork","Egg","Water","Salt","Sugar","Soy Sauce","Starch","Tomato Puree","Vinegar","Coriander")
+        measures1= arrayListOf("200g","1","Dash","1/2 tsp","1 tsp","10g","10g","30g","10g","Dash")
         meal1= Meal(0,"Sweet and Sour Pork",null,"Pork","Chinese",
             "Preparation\r\n1. Crack the egg into a bowl. Separate the egg white and yolk.\r\n\r\nSweet and Sour Pork\r\n2. Slice the pork tenderloin into ips.\r\n\r\n3. Prepare the marinade using a pinch of salt, one teaspoon of starch, two teaspoons of light soy sauce, and an egg white.\r\n\r\n4. Marinade the pork ips for about 20 minutes.\r\n\r\n5. Put the remaining starch in a bowl. Add some water and vinegar to make a starchy sauce.\r\n\r\nSweet and Sour Pork\r\nCooking Inuctions\r\n1. Pour the cooking oil into a wok and heat to 190\u00b0C (375\u00b0F). Add the marinated pork ips and fry them until they turn brown. Remove the cooked pork from the wok and place on a plate.\r\n\r\n2. Leave some oil in the wok. Put the tomato sauce and white sugar into the wok, and heat until the oil and sauce are fully combined.\r\n\r\n3. Add some water to the wok and thoroughly heat the sweet and sour sauce before adding the pork ips to it.\r\n\r\n4. Pour in the starchy sauce. Stir-fry all the ingredients until the pork and sauce are thoroughly mixed together.\r\n\r\n5. Serve on a plate and add some coriander for decoration.",
             "https://www.themealdb.com/images/media/meals/1529442316.jpg",
             "Sweet","https://www.youtube.com/watch?v=mdaBIhgEAMo",ingredients1,measures1,null,null,null,null)
 
-        ingredients2= arrayOf("Olive Oil","Mushrooms","Chicken Legs","Passata","Chicken Stock Cube","Black Olives","Parsley")
-        measures2= arrayOf("1 tbs","300g","4","500g","1","100g","Chopped")
+        ingredients2= arrayListOf("Olive Oil","Mushrooms","Chicken Legs","Passata","Chicken Stock Cube","Black Olives","Parsley")
+        measures2= arrayListOf("1 tbs","300g","4","500g","1","100g","Chopped")
         meal2=Meal(1,"Chicken Marengo",null,"Chicken","French",
             "Heat the oil in a large flameproof casserole dish and stir-fry the mushrooms until they start to soften. Add the chicken legs and cook briefly on each side to colour them a little.\r\nPour in the passata, crumble in the stock cube and stir in the olives. Season with black pepper \u2013 you shouldn\u2019t need salt. Cover and simmer for 40 mins until the chicken is tender. Sprinkle with parsley and serve with pasta and a salad, or mash and green veg, if you like.",
             "https://www.themealdb.com/images/media/meals/qpxvuq1511798906.jpg",
@@ -97,8 +96,8 @@ class MainActivity : AppCompatActivity() {
             null,
             null)
 
-        ingredients3= arrayOf("Rice","Onion","Lime","Garlic Clove","Cucumber","Carrots","Ground Beef","Soy Sauce")
-        measures3= arrayOf("White","1","1","3","1","3 oz","1 lb","2 oz")
+        ingredients3= arrayListOf("Rice","Onion","Lime","Garlic Clove","Cucumber","Carrots","Ground Beef","Soy Sauce")
+        measures3= arrayListOf("White","1","1","3","1","3 oz","1 lb","2 oz")
         meal3=Meal(2,
             "Beef Banh Mi Bowls with Sriracha Mayo, Carrot & Pickled Cucumber",
             null,
@@ -114,8 +113,8 @@ class MainActivity : AppCompatActivity() {
             null,
             null)
 
-        ingredients4= arrayOf("Olive Oil","Onion","Chickpeas","Vegetable Stock","Cumin","Garlic","Salt","Harissa Spice","Pepper","Lime")
-        measures4= arrayOf("2 tbs","1 medium finely diced","250g","1.5L","1 tsp","5 cloves","1/2 tsp","1 tsp","Pinch","1/2")
+        ingredients4= arrayListOf("Olive Oil","Onion","Chickpeas","Vegetable Stock","Cumin","Garlic","Salt","Harissa Spice","Pepper","Lime")
+        measures4= arrayListOf("2 tbs","1 medium finely diced","250g","1.5L","1 tsp","5 cloves","1/2 tsp","1 tsp","Pinch","1/2")
         meal4=Meal(3,
             "Leblebi Soup",
             null,
@@ -135,16 +134,5 @@ class MainActivity : AppCompatActivity() {
         mealViewModel.addAll(meal1,meal2,meal3,meal4)
 
         println("Added")
-    }
-
-    private fun getAllData(){
-        mealViewModel.getAll().observeForever { newList ->
-            allMeals = newList.toTypedArray()
-            println(allMeals[0])
-        }
-    }
-
-    private fun deleteAllData(){
-//        mealViewModel.deleteAll()
     }
 }
