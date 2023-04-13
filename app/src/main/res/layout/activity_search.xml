@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="8dp" />
                 <EditText
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/searchIngre_et"
                     style="@style/searchBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

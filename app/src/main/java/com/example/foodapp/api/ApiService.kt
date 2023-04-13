@@ -1,5 +1,6 @@
 package com.example.foodapp.api
 
+import android.widget.Toast
 import com.example.foodapp.database.Meal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,21 +35,29 @@ class MealApiService() {
     private lateinit var meal: Meal
     private lateinit var recievedMeals:ArrayList<Meal>
 
+
     suspend fun searchAllMealsByIngredient(searchText:String) {
+        recievedMeals=ArrayList<Meal>()
         val url = URL("$baseUrl$endpointSearchIngredient$searchText")
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
 
-        withContext(Dispatchers.IO) {
-            val bf = BufferedReader(InputStreamReader(con.inputStream))
-            val stb = StringBuilder()
-            var line: String? = bf.readLine()
-            while (line != null) {
-                stb.append(line)
-                line = bf.readLine()
+        try{
+            withContext(Dispatchers.IO) {
+                val bf = BufferedReader(InputStreamReader(con.inputStream))
+                val stb = StringBuilder()
+                var line: String? = bf.readLine()
+                while (line != null) {
+                    stb.append(line)
+                    line = bf.readLine()
+                }
+                val json:String=stb.toString()
+                val jsonObject = JSONObject(json)
+                saveRecievedData(jsonObject)
+                println("results : "+recievedMeals.size)
+                println("saved")
             }
-            val json:String=stb.toString()
-            val jsonObject = JSONObject(json)
-            sendRecievedData(jsonObject)
+        }catch (e:Exception){
+            println("Errorrrr")
         }
     }
 
@@ -72,12 +81,10 @@ class MealApiService() {
         return jsonObject
     }
 
-
-    private suspend fun sendRecievedData(jsonObject: JSONObject){
+    private suspend fun saveRecievedData(jsonObject: JSONObject){
         val mealsjsonArray = jsonObject.getJSONArray("meals")
         var mealjsonArray:JSONArray
         var mealJSONObject:JSONObject
-        println(mealsjsonArray)
         for(i in 0..mealsjsonArray.length()-1){
             var jsonObject = mealsjsonArray.getJSONObject(i)
             val idMeal = jsonObject.getString("idMeal")
@@ -105,7 +112,6 @@ class MealApiService() {
 
         Ingredients = ArrayList<String?>()
         Measure = ArrayList<String?>()
-        recievedMeals = ArrayList<Meal>()
 
         for (j in 1..20){
             Ingredients.add(jsonObject.getString("strIngredient$j"))
@@ -116,6 +122,9 @@ class MealApiService() {
 
         meal=Meal(Integer.parseInt(id),Name,DrinkAlternate,Category,Area,Instructions,MealThumb,Tags,YouTube,Ingredients,Measure,Source,ImageSource,CreativeCommonsConfirmed,dateModified)
         recievedMeals.add(meal)
-        println(recievedMeals.size)
+    }
+
+    fun getResults():ArrayList<Meal>{
+        return recievedMeals
     }
 }

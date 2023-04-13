@@ -35,22 +35,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var mealApiService = MealApiService()
-
         //--init viewmodel--
         mealViewModel= ViewModelProvider(this).get(MealViewModel::class.java)
 
         val btnsearchdb:Button=findViewById(R.id.btnsearchdb)
         btnsearchdb.setOnClickListener {
-//            val intent1 = Intent(this, Search::class.java)
-//            startActivity(intent1)
-            runBlocking {
-                launch {
-                    mealApiService.searchAllMealsByIngredient("chicken")
-                }
-            }
-
-
+            val intent1 = Intent(this, Search::class.java)
+            startActivity(intent1)
         }
 
         val btnadd:Button=findViewById(R.id.btnadd)
