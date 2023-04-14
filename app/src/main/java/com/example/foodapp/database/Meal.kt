@@ -23,5 +23,6 @@ data class Meal(
     val Source:String?,
     val ImageSource:String?,
     val CreativeCommonsConfirmed:String?,
-    val dateModified:String?
+    val dateModified:String?,
+    var visibility:Boolean=false
 )

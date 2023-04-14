@@ -14,5 +14,9 @@ class MealRepo(private val mealDao: MealDao) {
     fun addAlll(vararg meal:Meal){
         mealDao.addAll(*meal)
     }
+    fun searchMeal(searchText:String):LiveData<List<Meal>>{
+        val getSearchedMeals:LiveData<List<Meal>> =mealDao.searchMeal(searchText)
+        return getSearchedMeals
+    }
 
 }

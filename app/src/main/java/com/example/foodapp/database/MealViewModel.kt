@@ -32,8 +32,9 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun getAll():LiveData<List<Meal>>{
-        return readAllData
+    fun searchMeal(searchText:String):LiveData<List<Meal>>{
+        val getSearchedMeals:LiveData<List<Meal>> = repository.searchMeal(searchText)
+        return getSearchedMeals
     }
 
 

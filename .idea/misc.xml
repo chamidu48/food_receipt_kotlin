@@ -9,6 +9,7 @@
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/button_white.xml" value="0.14583333333333334" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/card_bg.xml" value="0.15052083333333333" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/loader.xml" value="0.2125" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/searchbar_bg.xml" value="0.14583333333333334" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/drawable/splash_background.xml" value="0.12962962962962962" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/font/fonts.xml" value="0.15989583333333332" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/layout/activity_search_ingredients.xml" value="0.25" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/layout/activity_search_meals.xml" value="0.21" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="..\:/Kotlin/FoodApp/app/src/main/res/layout/loader.xml" value="0.19384057971014493" />
         <entry key="..\:/Kotlin/FoodApp/app/src/main/res/layout/search_item_card.xml" value="0.33" />
       </map>
     </option>

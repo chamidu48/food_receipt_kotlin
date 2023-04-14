@@ -19,7 +19,7 @@ interface MealDao {
     fun getAll():LiveData<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%' OR Ingredients LIKE '%' || :searchInput || '%'")
-    fun getMealByIngredient(searchInput:String):LiveData<List<Meal>>
+    fun searchMeal(searchInput:String):LiveData<List<Meal>>
 
     @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%'")
     fun getMealByName(searchInput:String):LiveData<List<Meal>>
