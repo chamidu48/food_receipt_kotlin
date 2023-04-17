@@ -1,5 +1,6 @@
 package com.example.foodapp.database
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -18,9 +19,9 @@ interface MealDao {
     @Query("SELECT * FROM Meal")
     fun getAll():LiveData<List<Meal>>
 
-    @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%' OR Ingredients LIKE '%' || :searchInput || '%'")
+    @Query("SELECT * FROM Meal WHERE LOWER(Meal) LIKE '%' || :searchInput || '%' OR LOWER(Ingredients) LIKE '%' || :searchInput || '%'")
     fun searchMeal(searchInput:String):LiveData<List<Meal>>
 
-    @Query("SELECT * FROM Meal WHERE Meal LIKE '%' || :searchInput || '%'")
+    @Query("SELECT * FROM Meal WHERE LOWER(Meal) LIKE '%' || :searchInput || '%'")
     fun getMealByName(searchInput:String):LiveData<List<Meal>>
 }

@@ -3,6 +3,7 @@ package com.example.foodapp.database
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.roomapp.data.MealRepo
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +14,13 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MealRepo
     val readAllData: LiveData<List<Meal>>
+    private lateinit var getSearchedMeals:LiveData<List<Meal>>
+    private var searchText:String=""
 
     init {
         val mealDao = MealDatabase.getDatabase(application).mealDao()
         repository = MealRepo(mealDao)
-        readAllData = repository.getAllMeals
+        readAllData = repository.getAll()
     }
 
     fun addMeal(meal: Meal) {
@@ -32,9 +35,15 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun searchMeal(searchText:String):LiveData<List<Meal>>{
-        val getSearchedMeals:LiveData<List<Meal>> = repository.searchMeal(searchText)
+    fun searchMeal(searchedText:String):LiveData<List<Meal>>{
+        getSearchedMeals= MutableLiveData()
+        viewModelScope.launch(Dispatchers.IO) {
+            getSearchedMeals= repository.searchMeal(searchedText)
+        }
         return getSearchedMeals
+    }
+    fun getAll():LiveData<List<Meal>>{
+        return readAllData
     }
 
 

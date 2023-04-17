@@ -1,18 +1,22 @@
-package com.example.foodapp.utils
-
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodapp.R
 import com.example.foodapp.database.Meal
+import com.example.foodapp.utils.MyAdapter
+import kotlinx.coroutines.*
+import java.lang.Exception
+import java.net.HttpURLConnection
+import java.net.URL
 
-
-class MyAdapter(private val mealList:ArrayList<Meal>) :
-    RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyImageCardAdapter (private val mealList:ArrayList<Meal>) :
+    RecyclerView.Adapter<MyImageCardAdapter.MyViewHolder>(){
 
     lateinit private var description:String
     lateinit private var line:String
@@ -20,19 +24,46 @@ class MyAdapter(private val mealList:ArrayList<Meal>) :
     lateinit private var measures:ArrayList<String?>
     private val desTitles=arrayListOf("Meal","DrinkAlternate","Category","Area","Instructions","Tags","Youtube")
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.search_item_card,
-        parent,false)
-        return MyViewHolder(itemView)
-    }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyImageCardAdapter.MyViewHolder {
+        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.search_item_image_card,
+            parent,false)
+        return MyImageCardAdapter.MyViewHolder(itemView)    }
+
+    override fun onBindViewHolder(holder: MyImageCardAdapter.MyViewHolder, position: Int) {
         val currentItem=mealList[position]
         holder.cardTitle.text=currentItem.Meal
         holder.cardSubtitle.text=currentItem.Category
 
         setDescription(currentItem)
         holder.expandableDescription.text=description
+
+        if (currentItem.MealThumb.equals("null")){
+            holder.thumbnailImg.setImageResource(R.drawable.thumb)
+        }
+        else{
+            try {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val imageUrl = URL(currentItem.MealThumb)
+                    val connection = imageUrl.openConnection() as HttpURLConnection
+                    connection.doInput = true
+                    connection.connect()
+                    val inputStream = connection.inputStream
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    // Update the UI on the main thread
+                    launch(Dispatchers.Main) {
+                        holder.thumbnailImg.setImageBitmap(bitmap)
+                    }
+                }
+            }catch (e:Exception){
+                print(e.toString())
+            }
+
+
+
+        }
+
 
         val isVisible:Boolean=currentItem.visibility
 
@@ -48,18 +79,7 @@ class MyAdapter(private val mealList:ArrayList<Meal>) :
         }
     }
 
-    override fun getItemCount(): Int {
-        return mealList.size
-    }
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val cardTitle:TextView=itemView.findViewById(R.id.cardTitle)
-        val cardSubtitle:TextView=itemView.findViewById(R.id.cardSubtitle)
-        val cardIcon:ImageButton=itemView.findViewById(R.id.cardIcon)
-        val expandableLayout:LinearLayout=itemView.findViewById(R.id.expandableLayout)
-        val expandableDescription:TextView=itemView.findViewById(R.id.expandableDescription)
-    }
-
-    private fun setDescription(meal: Meal){
+    private fun setDescription(meal: Meal) {
         description=""
         line=""
 
@@ -100,4 +120,20 @@ class MyAdapter(private val mealList:ArrayList<Meal>) :
             }
         }
     }
+
+    override fun getItemCount(): Int {
+        return mealList.size
+    }
+
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val thumbnailImg: ImageView=itemView.findViewById(R.id.imgTumb)
+        val cardTitle:TextView=itemView.findViewById(R.id.cardTitle)
+        val cardSubtitle:TextView=itemView.findViewById(R.id.cardSubtitle)
+        val cardIcon:ImageButton=itemView.findViewById(R.id.cardIcon)
+        val expandableLayout:LinearLayout=itemView.findViewById(R.id.expandableLayout)
+        val expandableDescription:TextView=itemView.findViewById(R.id.expandableDescription)
+    }
+    
+    
 }
+

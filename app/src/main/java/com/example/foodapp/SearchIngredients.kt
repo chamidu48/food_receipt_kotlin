@@ -7,10 +7,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodapp.api.MealApiService
 import com.example.foodapp.database.Meal
+import com.example.foodapp.database.MealViewModel
 import com.example.foodapp.utils.Loader
 import com.example.foodapp.utils.MyAdapter
 import kotlinx.coroutines.launch
@@ -21,14 +23,18 @@ class SearchIngredients : AppCompatActivity() {
     private lateinit var recyclerView:RecyclerView
     private lateinit var mealList: ArrayList<Meal>
 
+    lateinit var mealViewModel: MealViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_ingredients)
 
+        mealViewModel= ViewModelProvider(this).get(MealViewModel::class.java)
 
         val resultsTv:TextView=findViewById<TextView>(R.id.resultCount_tv)
         val searchbar:EditText=findViewById(R.id.searchIngre_et)
         val searchButton: Button =findViewById<Button>(R.id.btnsearch)
+        val addtodbButton:Button=findViewById<Button>(R.id.btnsavetodb)
 
         val mealApiService:MealApiService= MealApiService()
         val loader=Loader(this)
@@ -40,7 +46,7 @@ class SearchIngredients : AppCompatActivity() {
 
         searchButton.setOnClickListener {
             imm.hideSoftInputFromWindow(resultsTv.getWindowToken(), 0)
-            var searchedText=searchbar.text.toString()
+            var searchedText=searchbar.text.toString().lowercase()
             if(isAlphabetic(searchedText)){
                 runBlocking {
                     loader.startLoader()
@@ -53,6 +59,12 @@ class SearchIngredients : AppCompatActivity() {
                     }
                 }
             }else{println("No results!")}
+        }
+
+        addtodbButton.setOnClickListener {
+            if (mealList.size>0){
+                mealViewModel.addAll(*mealList.toTypedArray())
+            }
         }
     }
     private fun isAlphabetic(str: String): Boolean {
