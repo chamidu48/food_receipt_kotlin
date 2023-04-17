@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,11 @@ class SearchIngredients : AppCompatActivity() {
         val searchbar:EditText=findViewById(R.id.searchIngre_et)
         val searchButton: Button =findViewById<Button>(R.id.btnsearch)
         val addtodbButton:Button=findViewById<Button>(R.id.btnsavetodb)
+        val backBtn: ImageButton = findViewById(R.id.btnback)
+
+        backBtn.setOnClickListener {
+            finish()
+        }
 
         val mealApiService:MealApiService= MealApiService()
         val loader=Loader(this)

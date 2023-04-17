@@ -15,6 +15,7 @@ class MealApiService() {
     private val baseUrl = "https://www.themealdb.com/api/json/v1/1/"
     private val endpointSearchIngredient = "filter.php?i="
     private val endpointSearchById = "lookup.php?i="
+    private val endpointSearchByName = "search.php?s="
 
     private lateinit var id:String
     private lateinit var Name:String
@@ -39,6 +40,31 @@ class MealApiService() {
     suspend fun searchAllMealsByIngredient(searchText:String) {
         recievedMeals=ArrayList<Meal>()
         val url = URL("$baseUrl$endpointSearchIngredient$searchText")
+        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+
+        try{
+            withContext(Dispatchers.IO) {
+                val bf = BufferedReader(InputStreamReader(con.inputStream))
+                val stb = StringBuilder()
+                var line: String? = bf.readLine()
+                while (line != null) {
+                    stb.append(line)
+                    line = bf.readLine()
+                }
+                val json:String=stb.toString()
+                val jsonObject = JSONObject(json)
+                saveRecievedData(jsonObject)
+                println("results : "+recievedMeals.size)
+                println("saved")
+            }
+        }catch (e:Exception){
+            println("Errorrrr")
+        }
+    }
+
+    suspend fun searchAllMealsByName(searchText:String) {
+        recievedMeals=ArrayList<Meal>()
+        val url = URL("$baseUrl$endpointSearchByName$searchText")
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
 
         try{

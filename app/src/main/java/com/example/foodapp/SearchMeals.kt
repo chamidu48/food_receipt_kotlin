@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +46,12 @@ class SearchMeals : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         mealViewModel= ViewModelProvider(this).get(MealViewModel::class.java)
+
+        val backBtn: ImageButton = findViewById(R.id.btnback)
+
+        backBtn.setOnClickListener {
+            finish()
+        }
 
         searchButton.setOnClickListener {
             imm.hideSoftInputFromWindow(resultsTv.getWindowToken(), 0)
