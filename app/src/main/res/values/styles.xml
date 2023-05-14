@@ -9,13 +9,37 @@
     <style name="Heading2">
         <item name="android:fontFamily">@font/oldenburg_regular</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="cardTitle">
+        <item name="android:fontFamily">@font/oldenburg_regular</item>
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="subtitle">
         <item name="android:fontFamily">@font/oldenburg_regular</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">12dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="subtitlebrown">
+        <item name="android:fontFamily">@font/oldenburg_regular</item>
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="subtitle2brown">
+        <item name="android:fontFamily">@font/oldenburg_regular</item>
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="subtitle2">
+        <item name="android:fontFamily">@font/oldenburg_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">10dp</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="buttonWhite" parent="Widget.AppCompat.Button">

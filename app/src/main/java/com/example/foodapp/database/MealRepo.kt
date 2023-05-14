@@ -6,10 +6,21 @@ import com.example.foodapp.database.MealDao
 
 class MealRepo(private val mealDao: MealDao) {
 
-    val getAllMeals: LiveData<List<Meal>> = mealDao.getAll()
 
     fun addMeal(meal: Meal){
         mealDao.addMeal(meal)
+    }
+    fun addAll(vararg meal: Meal){
+        mealDao.addAll(*meal)
+    }
+    fun searchMeal(searchText:String):LiveData<List<Meal>>{
+        val getSearchedMeals:LiveData<List<Meal>> =mealDao.searchMeal(searchText)
+        println("Sent items count : "+ (getSearchedMeals.value?.size ?: -1))
+        return getSearchedMeals
+    }
+    fun getAll():LiveData<List<Meal>>{
+        val getAllMeals: LiveData<List<Meal>> = mealDao.getAll()
+        return getAllMeals
     }
 
 }

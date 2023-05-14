@@ -26,72 +26,67 @@
             android:paddingBottom="10dp"
             android:paddingTop="15dp">
 
-            <ImageButton
-                android:id="@+id/btnback"
-                style="@style/Widget.AppCompat.ImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                app:srcCompat="@drawable/back"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/Heading2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="5dp"
-                android:text="Seach Meals" />
+                <ImageButton
+                    android:id="@+id/btnback"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    app:srcCompat="@drawable/back"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp" />
-
-            <TextView
-                android:id="@+id/twww"
-                style="@style/subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="2dp"
-                android:paddingBottom="5dp"
-                android:text="by name" />
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/Heading2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingTop="5dp"
+                    android:text="Seach Meals" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp" />
 
-            <EditText
-                android:id="@+id/searchDB_et"
-                style="@style/searchBar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="left|center_vertical"
-                android:hint="Search"
-                android:paddingLeft="10dp"
-                android:textColorHint="@color/white"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                app:backgroundTint="#3BFFFFFF"
-                app:strokeColor="#FFFFFFFF"
-                tools:ignore="TouchTargetSizeCheck" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
+                <EditText
+                    android:id="@+id/searchDB_et"
+                    style="@style/searchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="Search"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/white"
+                    android:layout_weight="5"
 
-            <Button
-                android:id="@+id/btnsearchDB"
-                style="@style/buttonOrange"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:layout_gravity="right"
-                app:backgroundTint="@color/orange" />
+                    app:backgroundTint="#3BFFFFFF"
+                    app:strokeColor="#FFFFFFFF"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="4dp" />
+                <Button
+                    android:id="@+id/btnsearchDB"
+                    style="@style/buttonOrange"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="Search"
+                    app:backgroundTint="@color/orange" />
+            </LinearLayout>
 
         </LinearLayout>
 

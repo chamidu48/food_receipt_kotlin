@@ -26,88 +26,81 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp">
 
-            <ImageButton
-                android:id="@+id/btnback"
-                style="@style/Widget.AppCompat.ImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                app:srcCompat="@drawable/back"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnback"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    app:srcCompat="@drawable/back"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/Heading2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingTop="5dp"
+                    android:text="Seach Meals" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
-
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/Heading2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="5dp"
-                android:text="Seach Meals" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp" />
-
-            <TextView
-                android:id="@+id/t3344242"
-                style="@style/subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="2dp"
-                android:paddingBottom="5dp"
-                android:text="by ingredients" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp" />
-
-            <EditText
-                android:id="@+id/searchIngre_et"
-                style="@style/searchBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="left|center_vertical"
-                android:hint="Search"
-                android:paddingLeft="10dp"
-                android:textColorHint="@color/white"
-
-                app:backgroundTint="#3BFFFFFF"
-                app:strokeColor="#FFFFFFFF"
-                tools:ignore="TouchTargetSizeCheck" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/searchIngre_et"
+                    style="@style/searchBar"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="Search"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/white"
+
+                    app:backgroundTint="#3BFFFFFF"
+                    app:strokeColor="#FFFFFFFF"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="4dp" />
+
                 <Button
                     android:id="@+id/btnsavetodb"
                     style="@style/buttonWhite"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:text="Save meals to Database"
-                    android:layout_marginRight="5dp"
                     app:backgroundTint="#FFFFFF" />
 
                 <Button
                     android:id="@+id/btnsearch"
                     style="@style/buttonOrange"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:text="Retrieve Meals"
                     app:backgroundTint="@color/orange" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp" />
 
         </LinearLayout>
 
