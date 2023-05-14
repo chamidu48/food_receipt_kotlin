@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +21,8 @@ class SearchIngredients : AppCompatActivity() {
     private lateinit var recyclerView:RecyclerView
     private lateinit var mealList: ArrayList<Meal>
 
+    lateinit var resultsTv:TextView
+
     lateinit var mealViewModel: MealViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,7 @@ class SearchIngredients : AppCompatActivity() {
 
         mealViewModel= ViewModelProvider(this).get(MealViewModel::class.java)
 
-        val resultsTv:TextView=findViewById<TextView>(R.id.resultCount_tv)
+        resultsTv=findViewById<TextView>(R.id.resultCount_tv)
         val searchbar:EditText=findViewById(R.id.searchIngre_et)
         val searchButton: Button =findViewById<Button>(R.id.btnsearch)
         val addtodbButton:Button=findViewById<Button>(R.id.btnsavetodb)
@@ -70,10 +69,26 @@ class SearchIngredients : AppCompatActivity() {
         addtodbButton.setOnClickListener {
             if (mealList.size>0){
                 mealViewModel.addAll(*mealList.toTypedArray())
+                Toast.makeText(this, "Data added to the database", Toast.LENGTH_SHORT).show()
             }
         }
     }
     private fun isAlphabetic(str: String): Boolean {
         return str.matches("[a-zA-Z]+".toRegex())
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (mealList.size > 0) {
+            outState.putSerializable("mealList", mealList)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null && savedInstanceState.containsKey("mealList")) {
+            mealList = savedInstanceState.getSerializable("mealList") as ArrayList<Meal>
+            resultsTv.text = "${mealList.size} results found"
+            recyclerView.adapter = MyAdapter(mealList)
+        }
     }
 }

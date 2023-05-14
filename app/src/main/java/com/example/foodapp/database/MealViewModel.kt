@@ -16,6 +16,7 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<Meal>>
     private lateinit var getSearchedMeals:LiveData<List<Meal>>
     private var searchText:String=""
+    private var uniqueMeals:ArrayList<Meal> = ArrayList()
 
     init {
         val mealDao = MealDatabase.getDatabase(application).mealDao()
@@ -30,8 +31,9 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun addAll(vararg meal: Meal){
+        checkAvailability(*meal)
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addAlll(*meal)
+            repository.addAll(*meal)
         }
     }
 
@@ -44,6 +46,10 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getAll():LiveData<List<Meal>>{
         return readAllData
+    }
+
+    private fun checkAvailability(vararg meals:Meal){
+        println(readAllData.value)
     }
 
 

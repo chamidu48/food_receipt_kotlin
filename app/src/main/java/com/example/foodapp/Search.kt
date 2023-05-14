@@ -4,6 +4,7 @@ import MyImageCardAdapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
@@ -26,6 +27,7 @@ class Search : AppCompatActivity() {
 
     lateinit var searchBar:EditText
     lateinit var searchedText:String
+    lateinit var resultsTv:TextView
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var mealList: ArrayList<Meal>
@@ -37,7 +39,7 @@ class Search : AppCompatActivity() {
 
         val mealApiService: MealApiService = MealApiService()
         val loader= Loader(this)
-        val resultsTv: TextView =findViewById<TextView>(R.id.resultCount_tv)
+        resultsTv =findViewById<TextView>(R.id.resultCount_tv)
 
         val backBtn: ImageButton = findViewById(R.id.btnback)
 
@@ -79,4 +81,21 @@ class Search : AppCompatActivity() {
     private fun isAlphabetic(str: String): Boolean {
         return str.matches("[a-zA-Z]+".toRegex())
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (mealList.size > 0) {
+            outState.putSerializable("mealList", mealList)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null && savedInstanceState.containsKey("mealList")) {
+            mealList = savedInstanceState.getSerializable("mealList") as ArrayList<Meal>
+            resultsTv.text = "${mealList.size} results found"
+            recyclerView.adapter = MyImageCardAdapter(mealList)
+        }
+    }
+
 }

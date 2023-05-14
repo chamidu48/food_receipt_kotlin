@@ -92,4 +92,20 @@ class SearchMeals : AppCompatActivity() {
         }
         return false
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (mealList.size > 0) {
+            outState.putSerializable("mealList", mealList)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null && savedInstanceState.containsKey("mealList")) {
+            mealList = savedInstanceState.getSerializable("mealList") as ArrayList<Meal>
+            resultsTv.text = "${mealList.size} results found"
+            recyclerView.adapter = MyAdapter(mealList)
+        }
+    }
 }
